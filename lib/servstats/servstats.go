@@ -40,3 +40,10 @@ func (s *serverStats) SetMajorError(e *errco.MshLog) {
 		s.MajorError = e
 	}
 }
+
+// ClearMajorError clears *serverStats.MajorError
+func (s *serverStats) ClearMajorError() {
+	s.M.Lock()
+	defer s.M.Unlock()
+	s.MajorError = nil
+}

@@ -394,11 +394,8 @@ func suspendRefresher(stop chan bool) {
 			return
 
 		case <-ticker.C:
-			// check if ms is responding, not offline, suspended
+			// check if ms is not offline, suspended
 			switch {
-			case servstats.Stats.MajorError != nil:
-				errco.NewLogln(errco.TYPE_WAR, errco.LVL_3, errco.ERROR_SERVER_UNRESPONDING, "minecraft server is not responding")
-				continue
 			case servstats.Stats.Status == errco.SERVER_STATUS_OFFLINE:
 				errco.NewLogln(errco.TYPE_WAR, errco.LVL_3, errco.ERROR_SERVER_OFFLINE, "minecraft server is offline")
 				continue
@@ -407,12 +404,19 @@ func suspendRefresher(stop chan bool) {
 				continue
 			}
 
+			// clear any MajorError before suspension refresh
+			// (watchdog errors during suspension are expected and should not prevent refresh)
+			if servstats.Stats.MajorError != nil {
+				errco.NewLogln(errco.TYPE_INF, errco.LVL_3, errco.ERROR_NIL, "clearing major error before suspension refresh")
+				servstats.Stats.ClearMajorError()
+			}
+
 			// warm ms unsuspending process
 			errco.NewLogln(errco.TYPE_INF, errco.LVL_1, errco.ERROR_NIL, "suspension refresh will warm minecraft server...")
 			WarmMS()
 
-			// give time to ms to recover from suspension
-			time.Sleep(1 * time.Second)
+			// give more time to ms to recover from suspension and avoid watchdog triggers
+			time.Sleep(3 * time.Second)
 
 			// freeze ms suspending process (softly in case a player has joined in the meantime)
 			errco.NewLogln(errco.TYPE_INF, errco.LVL_1, errco.ERROR_NIL, "suspension refresh will freeze minecraft server...")

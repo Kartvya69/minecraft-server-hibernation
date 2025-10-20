@@ -161,12 +161,12 @@
         },
         {
             "name": "SuspendRefresh",
-            "description": "This value in seconds will toggle the hibernate state because minecraft thinks it ran into some error if it gets hibernated. This value depends on many variables like memory speed, cpu speed\/usage, i\/o wait and the minecraft software beeing used.",
+            "description": "This value in seconds will toggle the hibernate state to prevent minecraft watchdog crashes. Recommended: 300 seconds (5 minutes) for modern Paper servers. Set to -1 to disable refresh. Lower values may cause 'server not responding' errors.",
             "env_variable": "SUSPEND_REFRESH",
-            "default_value": "30",
+            "default_value": "300",
             "user_viewable": true,
             "user_editable": true,
-            "rules": "required|integer|between:0,60000",
+            "rules": "required|integer|between:-1,60000",
             "field_type": "text"
         },
         {
