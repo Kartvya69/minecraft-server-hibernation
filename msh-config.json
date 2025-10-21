@@ -1,9 +1,9 @@
 {
   "Server": {
-    "Folder": "{path/to/server/folder}",
-    "FileName": "{server.jar}",
-    "Version": "1.19.2",
-    "Protocol": 760
+    "Folder": "./",
+    "FileName": "server.jar",
+    "Version": "1.17.1",
+    "Protocol": 756
   },
   "Commands": {
     "StartServer": "java <Commands.StartServerParam> -jar <Server.FileName> nogui",
@@ -13,13 +13,13 @@
   },
   "Msh": {
     "Debug": 1,
-    "ID": "",
+    "ID": "52fdfc0721feefe75af65af163f82654f163f",
     "MshPort": 25555,
-    "MshPortQuery": 25555,
-    "EnableQuery": true,
+    "MshPortQuery": 25565,
+    "EnableQuery": false,
     "TimeBeforeStoppingEmptyServer": 30,
     "SuspendAllow": false,
-    "SuspendRefresh": -1,
+    "SuspendRefresh": 0,
     "InfoHibernation": "                   §fserver status:\n                   §b§lHIBERNATING",
     "InfoStarting": "                   §fserver status:\n                    §6§lWARMING UP",
     "NotifyUpdate": true,
